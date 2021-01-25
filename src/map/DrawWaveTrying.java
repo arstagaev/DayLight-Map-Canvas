@@ -58,6 +58,7 @@ public class DrawWaveTrying {
         //private static final long serialVersionUID = 1L;
         int er = 0;
 
+        int days = 0;
         int x = 0;
         int y = 0;
         boolean directionToLeft = true;
@@ -65,6 +66,7 @@ public class DrawWaveTrying {
         GeneralPath filledPolygon = null;
         GeneralPath filledPolygon2 = null;
         Curve curveDraw = new Curve();
+        TimeSeasons timeSeasons = new TimeSeasons();
 
         public DrawPanel4() {
             ActionListener animate = new ActionListener() {
@@ -72,24 +74,31 @@ public class DrawWaveTrying {
 
                     moveIt();
                     repaint();
-                    er++;
+                    //er++;
+                    x = mover(x);
+                    days = timeSeasons.seasonsMotion(days);
 
-                    if (x<-499){
-                        directionToLeft=false;
-                    }else if(x==0) {
-                        directionToLeft=true;
-                    }
-                    if (directionToLeft){
-                        x--;
-                    }else {
-                        x++;
-                    }
+
                 }
 
             };
             Timer timer = new Timer(10,animate);
             timer.setRepeats(true);
             timer.start();
+        }
+         int mover(int x){
+            if (x<-499){
+                directionToLeft=false;
+            }else if(x==0) {
+                directionToLeft=true;
+            }
+            if (directionToLeft){
+                x--;
+            }else {
+                x++;
+            }
+
+            return x = 0;
         }
 
         public void paintComponent(Graphics g)
@@ -115,14 +124,19 @@ public class DrawWaveTrying {
             // fill and stroke GeneralPath
 
             // draw main curve
-            curveDraw.curve(x,y,filledPolygon, g2);
+            curveDraw.curve(x,y,filledPolygon,days, g2);
+
+
+            g.setColor(Color.GREEN);
+            g.fillRect(xControl(x)+10,300,xControl(x)+100,350);
+
 //            if (x<-499){
 //                curveDraw.curve(x+999,y,filledPolygon, g2);
 //
 //            }
             if (x<0){
 
-                curveDraw.curve(x+500,y,filledPolygon, g2);
+                curveDraw.curve(x+500,y,filledPolygon,days, g2);
             }
 
             System.out.println(x);
@@ -142,6 +156,12 @@ public class DrawWaveTrying {
 
 
             //repaint();
+        }
+        public int xControl(int x){
+            if (x<0){
+                x = 500-(x*-1);
+            }
+            return x;
         }
 
 
@@ -177,6 +197,7 @@ public class DrawWaveTrying {
         }
         System.out.println(sizeoval);
     }
+
 
 
     private void moveIt() {
