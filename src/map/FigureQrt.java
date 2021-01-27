@@ -1,5 +1,5 @@
 package map;
 
-public enum Figure {
+public enum FigureQrt {
     FIRST,SECOND,THIRD,FOURTH
 }
