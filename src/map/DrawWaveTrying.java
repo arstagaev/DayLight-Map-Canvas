@@ -77,7 +77,7 @@ public class DrawWaveTrying {
                     //er++;
                     x = mover(x);
                     days = timeSeasons.seasonsMotion(days);
-
+                     //sdfsdf
 
                 }
 
