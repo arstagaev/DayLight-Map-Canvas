@@ -19,7 +19,7 @@ public class DrawerMain extends JPanel {
 //    int y = 0;
 
     GeneralPath filledPolygon = null;
-    //GeneralPath filledPolygon2 = null;
+    GeneralPath filledPolygon2 = null;
 
     public DrawerMain() {
         ActionListener animate = new ActionListener() {
@@ -53,16 +53,20 @@ public class DrawerMain extends JPanel {
         // set backroundcolor
 //        g.setColor(Color.BLACK);
 //        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        g.drawImage(DayLightShow.map,0,0,500,250,this);
 
-
+        // scale 1:2???????????????????
         Graphics2D g2 = (Graphics2D) g;
-        Curve.curve(filledPolygon,g2);
-        Curve.curve(filledPolygon,g2);
+        Curve.curve(filledPolygon,0,g2);
+        Curve.curve(filledPolygon2,480,g2);
+        g.setColor(Color.RED);
+        g.drawLine(250,0,250,500);
 
 
 
-        g.setColor(Color.GREEN);
-        g.fillRect(10,10,100,350);
+
+//        g.setColor(Color.GREEN);
+//        g.fillRect(10,10,100,350);
         repaint();
     }
 

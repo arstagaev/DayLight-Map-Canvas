@@ -41,8 +41,7 @@ public class BaseFigure extends TimeMover {
                 setEx(accelerationINPUT, Direction.RIGHT);
             }
         }
-        setBx();
-        setFx();
+
 
 //        if (timeline<150){
 //
@@ -73,11 +72,11 @@ public class BaseFigure extends TimeMover {
 
         //respect to Bx
 
-        if (Ax<=1){
-            direction = Direction.RIGHT;
-        }else if (Ax>=200){
-            direction = Direction.LEFT;
-        }
+//        if (Ax<=1){
+//            direction = Direction.RIGHT;
+//        }else if (Ax>=200){
+//            direction = Direction.LEFT;
+//        }
         switch (direction){
             case RIGHT ->{Ax = Ax+acceleration;}
             case LEFT -> {Ax = Ax-acceleration;}
@@ -89,11 +88,11 @@ public class BaseFigure extends TimeMover {
 
     public static void setEx(int acceleration, Direction direction2) {
 
-        if (Ex<=300){
-            direction2 = Direction.RIGHT;
-        }else if (Ex>=500){
-            direction2 = Direction.LEFT;
-        }
+//        if (Ex<=300){
+//            direction2 = Direction.RIGHT;
+//        }else if (Ex>=500){
+//            direction2 = Direction.LEFT;
+//        }
         switch (direction2){
             case RIGHT ->{Ex = Ex+acceleration;}
             case LEFT -> {Ex = Ex-acceleration;}

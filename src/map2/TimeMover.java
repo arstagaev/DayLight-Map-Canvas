@@ -4,7 +4,7 @@ public class TimeMover   {
 
 
     boolean directionToLeft = true;
-    // minutes 1440
+    // minutes 1-4-4-0-  now is 500 / 21
     public static int minutes = 0;
 
     // min 0, max 360
@@ -12,6 +12,7 @@ public class TimeMover   {
 
 
     public static StageOfYear stageOfYear = StageOfYear.FIRST;
+    public static StageOfYear lastStageOfYear = null;
 
     //public static int days;
 
