@@ -1,5 +1,3 @@
-package map2;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,16 +6,6 @@ import java.awt.geom.GeneralPath;
 
 public class DrawerMain extends JPanel {
 
-    //private static final long serialVersionUID = 1L;
-    //TimeMover timeMover = new TimeMover();
-    Curve curve = new Curve();
-
-    int er = 0;
-
-    //int days = 0;
-//    int x = 0;
-//    int y = 0;
-
     GeneralPath filledPolygon = null;
     GeneralPath filledPolygon2 = null;
 
@@ -25,11 +13,6 @@ public class DrawerMain extends JPanel {
         ActionListener animate = new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
 
-
-                //er++;
-//                x = timeMover.hours(x);
-//                days = timeMover.days(days);
-                //curve
                 TimeMover.Ticker();
 
             }
@@ -42,33 +25,25 @@ public class DrawerMain extends JPanel {
 
     }
 
-    public void Refresh(){
-        repaint();
-    }
-
-
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // set backroundcolor
-//        g.setColor(Color.BLACK);
-//        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        // for background
+        g.setColor(Color.GRAY);
+        g.fillRect(0,0,500,500);
         g.drawImage(DayLightShow.map,0,0,500,250,this);
 
-        // scale 1:2???????????????????
+
+        g.setColor(Color.RED);
+        g.fillRect(0,0,2,2);
+        //g.setColor(Color.BLUE);
+
+        // scale 1:2
         Graphics2D g2 = (Graphics2D) g;
         Curve.curve(filledPolygon,0,g2);
         Curve.curve(filledPolygon2,480,g2);
         g.setColor(Color.RED);
         g.drawLine(250,0,250,500);
 
-
-
-
-//        g.setColor(Color.GREEN);
-//        g.fillRect(10,10,100,350);
         repaint();
     }
-
-
 }

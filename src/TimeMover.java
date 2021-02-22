@@ -1,4 +1,4 @@
-package map2;
+import enums.StageOfYear;
 
 public class TimeMover   {
 
@@ -24,10 +24,14 @@ public class TimeMover   {
 
     public TimeMover(){}
 
+    public void seasonsMover(){
+
+    }
+
 
     public static void Ticker(){
-        BaseFigure.setMoveSpeed(+1);
 
+        BaseFigure.setMoveSpeed(1);
 
         if (stageOfYear == StageOfYear.FIRST | stageOfYear == StageOfYear.SECOND){
             timeline++;
@@ -39,58 +43,24 @@ public class TimeMover   {
 
 
         if (timeline>=0 & timeline<150){
+            //1
             if (timeline==0){
                 stageOfYear = StageOfYear.FIRST;
             }
-
-            if (stageOfYear==StageOfYear.THIRD & timeline==149){
+            //4
+            if (stageOfYear== StageOfYear.THIRD & timeline==149){
                 stageOfYear=StageOfYear.FOURTH;
             }
 
-
-        }else if(timeline>=150 & timeline<=360 ){
+        } else if(timeline>=150 & timeline<=360 ){
+            //2
             if (timeline==150 & stageOfYear == StageOfYear.FIRST){
                 stageOfYear = StageOfYear.SECOND;
             }
-
+            //3
             if (timeline==360){
                 stageOfYear = StageOfYear.THIRD;
             }
         }
-    }
-
-    public int hours(int x){
-
-        if (x<-499){
-            directionToLeft=false;
-        }else if(x==0) {
-            directionToLeft=true;
-        }
-        if (directionToLeft){
-            x--;
-        }else {
-            x++;
-        }
-
-        return x;
-    }
-
-    public int days(int days){
-
-
-
-        if (days>=200){
-            directionToLeft=true;
-        }else if(days<=0) {
-            directionToLeft=false;
-        }
-
-        if (directionToLeft){
-            days--;
-        }else {
-            days++;
-        }
-        System.out.println("season "+days);
-        return days;
     }
 }

@@ -1,10 +1,12 @@
-package map2;
+import enums.StageOfYear;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class DayLightShow extends DrawerMain {
     private JFrame frame;
@@ -18,10 +20,22 @@ public class DayLightShow extends DrawerMain {
     }
 
     public void timeMachine(){
-        TimeMover.minutes = -((7)*21); // UTC
+        /**
+         * if minutes = 0 then Ax = 0
+         * curves moves to left
+         * [hours in London * 21 (coeff)]
+         */
+        Calendar timeNow = Calendar.getInstance(TimeZone.getTimeZone("GMT+0"));
+        System.out.println("old java "+ timeNow.get(Calendar.HOUR_OF_DAY) + ":" + timeNow.get(Calendar.MINUTE));
+
+        TimeMover.minutes = -((timeNow.get(Calendar.HOUR_OF_DAY))*21); // UTC
         System.out.println("Current minutes " + LocalDateTime.now().getHour());
         System.out.println("minutes coord: "+ TimeMover.minutes);
+
+
         BaseFigure.dayDynamics();
+        //BaseFigure.seasonDynamics(timeNow.get(Calendar.DAY_OF_MONTH)*2,7);
+        //BaseFigure.setMoveSpeed(200);
 
     }
 
@@ -35,13 +49,6 @@ public class DayLightShow extends DrawerMain {
         frame = new JFrame("Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-//        JPanel p = new JPanel();
-//        JButton button = new JButton("Button");
-//        p.setLayout(null);
-//        button.setBounds(40, 100, 100, 60);
-//        p.add(button);
-
-        //drawPanel = new CircleAndCubic().DrawPanel();
         //zenith == 12:00
         // 500 / 24 = 20.8
         // for 3 minutes
@@ -70,7 +77,16 @@ public class DayLightShow extends DrawerMain {
                         BaseFigure.dayDynamics();
                     }
                     case 38 -> {
+                        //up
+                        //TimeMover.timeline++;
+                        //BaseFigure.seasonDynamics(200,1);
+                        BaseFigure.seasonDynamics(200,1);
+                    }
+                    case 40 -> {
                         //down
+                        //TimeMover.timeline--;
+                        BaseFigure.seasonDynamics(10,12);
+
                     }
                     case 32 ->{
 
@@ -101,23 +117,7 @@ public class DayLightShow extends DrawerMain {
     }
 
     private void showVars() {
-        System.out.println("LOG timeline "+ TimeMover.timeline+" min "+ TimeMover.minutes+"\n"
-                +" stageyear "+ TimeMover.stageOfYear);
+        System.out.println("LOG timeline "+TimeMover.timeline+" min "+TimeMover.minutes+"\n"
+                +" stageyear "+TimeMover.stageOfYear);
     }
-
-//    private void showButtonDemo(){
-//
-//        JButton okButton = new JButton("OK");
-//        okButton.setSize(100,100);
-//        okButton.setLocation(300,300);
-//        okButton.setBackground(Color.BLACK);
-//        okButton.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//            }
-//        });
-//
-//        frame.setVisible(true);
-//    }
-
-
 }

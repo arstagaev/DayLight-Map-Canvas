@@ -1,4 +1,4 @@
-package map2;
+package enums;
 
 
 public enum Direction {
