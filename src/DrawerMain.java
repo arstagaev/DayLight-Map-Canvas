@@ -1,26 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.GeneralPath;
 
 public class DrawerMain extends JPanel {
 
     GeneralPath filledPolygon = null;
     GeneralPath filledPolygon2 = null;
+    GeneralPath filledPolygon3 = null;
 
     public DrawerMain() {
-        ActionListener animate = new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-
-                TimeMover.Ticker();
-
-            }
-
-        };
-        Timer timer = new Timer(10,animate);
-        timer.setRepeats(true);
-        timer.start();
+//        ActionListener animate = new ActionListener() {
+//            public void actionPerformed(ActionEvent ae) {
+//
+//                TimeMover.Ticker();
+//
+//            }
+//
+//        };
+//        Timer timer = new Timer(10,animate);
+//        timer.setRepeats(true);
+//        timer.start();
         //timeMover.TimeMAchine(animate);
 
     }
@@ -36,13 +35,15 @@ public class DrawerMain extends JPanel {
         g.setColor(Color.RED);
         g.fillRect(0,0,2,2);
         //g.setColor(Color.BLUE);
-
+        int a = -500;
         // scale 1:2
         Graphics2D g2 = (Graphics2D) g;
-        Curve.curve(filledPolygon,0,g2);
-        Curve.curve(filledPolygon2,480,g2);
-        g.setColor(Color.RED);
-        g.drawLine(250,0,250,500);
+        Curve.curve(filledPolygon,480,g2);
+        Curve.curve(filledPolygon2,0,g2);
+        Curve.curveDarkShadow(filledPolygon3,0,g2);
+        Curve.curveDarkShadow(filledPolygon3,480,g2);
+//        g.setColor(Color.RED);
+//        g.drawLine(250,0,250,500);
 
         repaint();
     }

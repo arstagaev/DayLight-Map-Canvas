@@ -1,11 +1,11 @@
-import enums.StageOfYear;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.time.LocalDateTime;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.TimeZone;
 
 public class DayLightShow extends DrawerMain {
@@ -15,38 +15,39 @@ public class DayLightShow extends DrawerMain {
 
 
     public DayLightShow() {
-        timeMachine();
+        long timestampUTC = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+        int hr = Integer.parseInt(sdf.format(new Date(timestampUTC)));
+
+        SimpleDateFormat sdf2 = new SimpleDateFormat("mm");
+        sdf2.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+        int min = Integer.parseInt((sdf2.format(new Date(timestampUTC))));
+
+        System.out.println("777 "+hr + min);
+
+        //timeMachine(hr,min);
+        timeMachine(0,0);
 
     }
 
-    public void timeMachine(){
-        /**
-         * if minutes = 0 then Ax = 0
-         * curves moves to left
-         * [hours in London * 21 (coeff)]
-         */
-        Calendar timeNow = Calendar.getInstance(TimeZone.getTimeZone("GMT+0"));
-        System.out.println("old java "+ timeNow.get(Calendar.HOUR_OF_DAY) + ":" + timeNow.get(Calendar.MINUTE));
-
-        TimeMover.minutes = -((timeNow.get(Calendar.HOUR_OF_DAY))*21); // UTC
-        System.out.println("Current minutes " + LocalDateTime.now().getHour());
-        System.out.println("minutes coord: "+ TimeMover.minutes);
+    public void timeMachine(int hr, int min){
+//        val sdf = java.text.SimpleDateFormat("MM-dd HH:mm ZZZZ")
+//        sdf.timeZone = TimeZone.getTimeZone(PreferenceMaestro.chosenTimeZone)
+//        var hr : String = sdf.format(java.util.Date(timestamp * 1000))
 
 
-        BaseFigure.dayDynamics();
-        //BaseFigure.seasonDynamics(timeNow.get(Calendar.DAY_OF_MONTH)*2,7);
-        //BaseFigure.setMoveSpeed(200);
-
+        BaseFigure.currentTime = -(int) (0.34*min+0.34*60*hr);
     }
 
     public static void main(String... args)
     {
         new DayLightShow().go();
     }
-
+//    int a = 1;
     private void go() {
 
-        frame = new JFrame("Test");
+        frame = new JFrame("Map");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //zenith == 12:00
@@ -61,6 +62,9 @@ public class DayLightShow extends DrawerMain {
         frame.getContentPane()
                 .add(BorderLayout.CENTER, drawerMain)
                 .setBackground(Color.WHITE);
+        initTimeLine();
+
+//        int a =1;
         frame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 System.out.println("Button clicked" +e.getKeyCode());
@@ -68,39 +72,34 @@ public class DayLightShow extends DrawerMain {
                     case 39 -> {
                         //right
 //                        Point.setY(Point.y);
-                        TimeMover.minutes = 1;
-                        BaseFigure.dayDynamics();
+                        //TimeMover.minutes = 1;
+                        //a++;
+                        //AnimationSeason.dayDynamics(1);
+                        AnimationSeason.dayDynamics((-60*12)/3);
+
                     }
                     case 37 -> {
                         //left
-                        TimeMover.minutes = -1;
-                        BaseFigure.dayDynamics();
+                        //a--;
+                        AnimationSeason.dayDynamics(-1);
                     }
                     case 38 -> {
                         //up
-                        //TimeMover.timeline++;
-                        //BaseFigure.seasonDynamics(200,1);
-                        BaseFigure.seasonDynamics(200,1);
+                        BaseFigure.seasonPPCoeff++;
+                        AnimationSeason.seasonDynamics((int) (BaseFigure.seasonPPCoeff));
+
                     }
                     case 40 -> {
                         //down
-                        //TimeMover.timeline--;
-                        BaseFigure.seasonDynamics(10,12);
 
+                        BaseFigure.seasonPPCoeff--;
+                        AnimationSeason.seasonDynamics((int) (BaseFigure.seasonPPCoeff));
+                        // 1 day = 2.191780
                     }
                     case 32 ->{
 
-                        if (TimeMover.stageOfYear != StageOfYear.STOPIT){
-                            TimeMover.lastStageOfYear = TimeMover.stageOfYear;
-                            TimeMover.stageOfYear = StageOfYear.STOPIT;
-                        }else {
-                            TimeMover.stageOfYear = TimeMover.lastStageOfYear;
-                        }
-
-
                     }
                 }
-
                 showVars();
 
             }
@@ -111,13 +110,15 @@ public class DayLightShow extends DrawerMain {
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
-
-
         //heartanim();
     }
 
+    private void initTimeLine() {
+        AnimationSeason.initTimeLine();
+    }
+
     private void showVars() {
-        System.out.println("LOG timeline "+TimeMover.timeline+" min "+TimeMover.minutes+"\n"
-                +" stageyear "+TimeMover.stageOfYear);
+//        System.out.println("LOG timeline "+TimeMover.timeline+" min "+TimeMover.minutes+"\n"
+//                +" stageyear "+TimeMover.stageOfYear);
     }
 }
